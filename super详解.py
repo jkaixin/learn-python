@@ -15,6 +15,7 @@ class A(object):
 
     def add(self,m):
         print('self is {0} @A.add'.format(self))
+        self.n += m
 
 class B(A):
     def __init__(self):
@@ -23,7 +24,7 @@ class B(A):
     def add(self,m):
         print('self is {0} @B.add'.format(self))
         super().add(m)
-        slef.n += 3
+        self.n += 3
 
 
 # 多继承
@@ -48,15 +49,15 @@ class D(B,C):
 
 if __name__ == '__main__':
     b = B()
-    print(B.mro())
+    print('B class MRO list: {0}'.format(B.mro()))
     b.add(2)
-    print(b.n)
+    print('b.n is {0}'.format(b.n))
 
     # 多继承
     d = D()
-    print(D.mro())
+    print('D class MRO list {0}'.format(D.mro()))
     d.add(2)
-    print(d.n)
+    print('d.n is {0}'.format(d.n))
 
 
 
