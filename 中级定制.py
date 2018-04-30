@@ -8,7 +8,7 @@ class Time60(object):
         self.minu = minu
 
     def __str__(self):
-        return '{0}:{0}'.format(self.hr,self,minu)
+        return '{0}:{0}'.format(self.hr,self.minu)
 
     __repr__ = __str__
 
