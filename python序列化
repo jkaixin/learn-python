@@ -1,0 +1,54 @@
+
+    在学习Django的Cookie、Session时，有提到session 字典与python普通字典对象一样，支持序列化，故好奇序列化是什么，能用来做什么，如何使用。
+
+    序列化是将对象的状态信息转换为可以存储或传输的形式的过程。在序列化起见，对象将其当前状态写入到临时或持久性存储区。以后可以通过从存储区读取
+或反序列化对象的状态，重新传建该对象。
+
+    我们编写的程序，会涉及到各种各样的对象、数据结构，它们通常是以变量的形式存在内存当中。当程序运行结束，这些变量会被清理。但是我们在下一次运
+行的时候可能需要用到上一次的某个对象，如果重新运行一次需要的时间比较长，那多次运行的成本太大，这就需要我们将变量持久化的存储；一种方式是利用文
+件读写的方式将变量转化为某种形式的字符串写入文件内，但需要自己控制存储格式，显的十分笨拙；更好的方式是通过序列化的方式将变量持久化到存储或者通
+过网络传输到别的机器上。
+
+    在Python中序列化叫做pickling，在其他语言中称之为serialization，marshalling...，反过来，把变量内容从序列化的对象重新读到内存里称之为反
+序列化，即unpickling。
+
+    Python 提供了pickle模块来实现序列化。
+    
+    pickle.dumps()方法将任意对象序列化成一个bytes，然后就可以把这个bytes写入文件；
+    pickle.dump()方法直接将对象序列化后写入一个file-like Object:
+        >>> import pickle
+        >>> f = open('D:\dump.txt','wb')
+        >>> d = dict(name='bill',age=20,score=88)
+        >>> pickle.dump(d,f)
+        >>> f.close
+        
+    当我们要把对象从磁盘读到内存时，可以先把内容读到一个bytes，然后用pickle.loads()方法反序列化出对象；也可以使用pickle.load()方法从一个
+    file-like Object中直接反序列化出对象；
+        >>> import pickle
+        >>> f = open('D:\dump.txt','rb')
+        >>> d = pickle.load(f)
+        >>> f.close
+        <built-in method close of _io.BufferedReader object at 0x000000000282C0F8>
+        >>> d
+        {'name': 'bill', 'age': 20, 'score': 88}
+        
+    但是，Pickle的问题与所有其他编程语言特有的序列化问题一样，Pickle只能用于Python，且可能不同版本间彼此不兼容，因此，只能用Pickle保存一些
+不重要的数据，不能成功反序列化也没关系。
+
+    JSON
+    
+    如果我们需要在不同语言之间传递对象，就需要把对象序列化为标准格式，比如XML，但是更好的方法是序列化为JSON，因为JSON表示出来就是一个字符串，
+可以被所有语言读取，也可以方便地存储到磁盘或者通过网络传输。JSON不仅是标准格式，而且比XML快，更可以直接在Web页面中读取，非常方便。
+
+    JSON表示的对象就是标准的JavaScript语言的对象，JSON和Python内存的数据类型对应如下：
+            JSON类型        Python类型
+            {}              dict
+            []              list
+            "string"        str
+            123.56          float
+            true/false      True/False
+            null            None
+            
+     Pyhton内置的json模块提供了非常完善的Python对象到JSON格式的转化。
+     
+           
