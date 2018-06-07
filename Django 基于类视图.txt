@@ -1,0 +1,24 @@
+
+在许多基于类视图的设计中，类属性非常重要，有两种方法来设置类属性：
+
+一、Python 标准的方式，子类化并在子类中覆盖属性和方法；
+
+二、在URLconf中用as_view()调用的关键字参数配置类的属性：
+    from django.http import HttpResponse
+    from django.views import View
+    
+    class GreetingView(View):
+      
+        greeting = 'Good day!'
+        
+        def get(self,request):
+            return HttpResponse(self.greeting)
+            
+    在url中配置
+    # urls.py
+    urlpatterns = [
+        url(r'^greenting/$',GreetingView.as_view(greeting='Good Morning')),
+    ]
+    
+使用mixins
+    Mixin 是多继承的一种形式，其来自多个父类的行为和属性可以组合在一起。
