@@ -29,3 +29,33 @@
     · DIRS 定义了一个目录列表，模板引擎按照列表顺序搜索这些目录以查找模板源文件；    
     · APP_DIRS 告诉模板引擎是否应该进入每个已安装的应用中查找模板。每种模板引擎后端都定义了一个惯用的名称作为应用内部存放模板的子目录名称
       django为它自己的模板引擎指定是'templates'，为jinja2指定的名字是'jinja2'
+      
+    Django模板语言
+        模板是由context来进行渲染的。渲染的过程是用在context中找到的值来替换模板中相应的变量，并执行相关tag。其他一切都按原样输出。
+        
+        Django 模板语言的语法包括4个结构。
+        
+        变量
+        
+        变量的值来自context中的输出，这类似于字典对象的keys到values的映射关系。
+        变量是被{{ }} 括起来的部分，例如：
+        My first name is {{ first_name}}.
+        
+        标签
+        
+        标签在渲染的过程中提供任意的逻辑。
+        
+        Tags 是由{% %}来定义的，例如
+            {% csrf_token %}
+        大部分标签都接收参数{% cycle 'odd' 'even' %}
+        
+        部分标签要求使用起始和闭合标签:
+            {% if user.is_authenticated %}Hello,{{user.name}} {% endif %}
+            
+        常用的内置的模板标签
+            autoescape
+            控制自动转义是否可用，这种标签带有任何 on 或 off 作为参数的话，他将决定转义块内效果。该标签以一个endautoescape作为结束标签。
+            
+            
+        
+        
