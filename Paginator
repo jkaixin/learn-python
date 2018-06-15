@@ -1,0 +1,46 @@
+
+Paginator 对象
+    class Paginator(object_list,per_page,orphans=0,allow_empty_first_page=True)
+    必选参数
+    object_list
+      列表、元组、QuerySet或具有count()或__len__()方法的其它可切片的对象。
+      为了得到一致的分页，QuerySet 应该排好序，例如使用order_by() 或 在模型上设置ordering
+      
+    per_page
+      每一页包含的对象的最大数目，但是不包含 orphans 设置的数目
+      
+    可选参数
+    orphans
+      有这样一种场景，假如每一个页面最大可以放置的对象数为10(per_page=10)，当最后一页的对象数小于4时，可能不希望这几条对象单独占用一个页面，那么
+      我们可以设置 orphans=3，那么就不会单独占用一个页面，而是会与上一页拼接起来，上一页就可能最大有13个记录。
+      
+    方法
+      Paginator.page(number)
+      返回指定页的的Page对象，如果不存在，则抛出InvalidPage错误
+      
+    属性
+      Paginator.count 返回所有对象的数量
+      Paginator.num_pages 页面总数
+      
+    InvalidPage 异常
+      异常基类，当paginator传入一个无效的页码时抛出。
+      exception PageNotAnInteger 传入的page页不是整数
+      exception EmptyPage 传入的page页为有效值，但是那个页面上没有任何对象时抛出
+      
+    Page对象
+      通常不需要手动构建Page对象，可以通过Paginator.page()来获得
+      
+      方法
+        Page.has_next() 如果有下一页则返回True
+        Page.has_previous() 如果有上一页则放回True
+        Page.has_other_pages 如果有上一页或者下一页则返回True
+        Page.next_page_number() 返回下一页的页码，如果不存在，抛出InvalidPade异常
+        Page.previous_page_number() 返回上一页的页码，如果不存在，抛出InvalidPade异常
+        
+      属性
+        Page.object_list 返回页面上所有对象的列表
+        Page.number 当前页的序号，从1开始
+        Page.paginator 相关的Paginator对象
+        
+      
+      
