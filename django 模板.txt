@@ -29,6 +29,15 @@
     · DIRS 定义了一个目录列表，模板引擎按照列表顺序搜索这些目录以查找模板源文件；    
     · APP_DIRS 告诉模板引擎是否应该进入每个已安装的应用中查找模板。每种模板引擎后端都定义了一个惯用的名称作为应用内部存放模板的子目录名称
       django为它自己的模板引擎指定是'templates'，为jinja2指定的名字是'jinja2'
+    
+    Django Templates 引擎 OPTIONS 配置项中接受以下参数：
+        1、'autoescape' : 一个布尔值，用于控制是否启用 HTML 自动转义。 默认为 True。
+        2、'context_processors' : 是一个包含以'.'为分隔符的 Python 调用路径的列表，在一个 template 被request 渲染时，它可以被调用用于产生
+           context数据。   默认是个空的 list。
+        3、'debug' : 打开/关闭模板调试模式的布尔值；它默认和setting中DEBUG有相同的值。
+        4、'loaders' : 模板加载器类的虚拟Python路径列表；
+        5、'builtins' : 添加自定义的模板标签到built-ins 的模板标签的点缀Python路径列表；
+           标签和内置库的过滤器可以在没有首先调用{% load %} 标签的情况下使用。
       
     Django模板语言
         模板是由context来进行渲染的。渲染的过程是用在context中找到的值来替换模板中相应的变量，并执行相关tag。其他一切都按原样输出。
