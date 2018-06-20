@@ -1,0 +1,17 @@
+
+多进程
+    
+    进程间通信
+    Process 之前肯定是需要通信的，操作系统提供了很多机制来实现进程间的通信。
+    Python 的multiprocessing 模块包装了底层的机制，提供了Queue、Pipes等多种方式来交换数据。
+    
+    进程通信（IPC，InterProcess Communication）是进程进行通信和同步的机制
+    
+    IPC 提供两个基本操作：
+    1、发送（send message）
+    2、接收（receive message）
+    
+    进程通信流程：
+    1、在通信进程之间 建立通信链路
+    2、通过send/receive交换信息
+    
