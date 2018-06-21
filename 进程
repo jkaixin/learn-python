@@ -54,4 +54,40 @@
          6、套接字（socket）
             套解口也是一种进程间通信机制，与其他通信机制不同的是，它可以用于不同机器间的进程通信。
             
+    multiprocessing Queue
+        Queue[maxsize]
+            创建共享的进程列队。maxsize 是列队中允许的最大项数。如果省略此参数或者传入负数，则表示无大小限制。底层列队使用管道和锁定实现。
+            
+            支持的方法：
+            Queue.cancle_join_thread()
+            不会在进程退出的时候自动连接后台线程。可以防止join_thread()方法阻塞。
+            
+            Queue.close()
+            关闭列队，防止列队中加入更多数据。
+            
+            Queue.empty()
+            调用此方法时列队为空，则放回True，否则放回False；如果其他进程或者线程正在往列队中添加项目，则结果不可靠。
+            
+            Queue.full()
+            如果列队已满，则返回True；也是不可靠
+            
+            Queue.get(block,timeout)
+            取出列队中的一个项目。如果列队为空，此方法将阻塞，直到列队中有项目可用为止。block用于控制阻塞行为，默认为True。如果改为False，会引发
+            Queue.Empty 异常；timeout 是可选的超时时间，用于阻塞模式中，如果在指定的时间内没有项目可用，将引发Queue.Empty异常。
+            
+            Queue.get_nowait() 同Queue.get(False)方法
+            
+            Queue.join_thread()
+            连接列队的后台线程。此方法用于在调用Queue.close()方法后，等待所有列队项被消耗。默认情况下，此方法由不是列队创建者的进程调用，
+            调用Queue.cancel_join_thread()方法可以禁止这种行为。
+            
+            Queue.put(block,timeout) 参考Queue.get()，只不过引发Queue.Full异常。
+            
+            Queue.qsize() 返回列队中目前项目的数量
+            
+            Queue.task_done()
+            使用者使用此方法发出信号，表示get()返回的项目已经被处理。如果调用此方法的次数大于从列队中删除的数量，将引发ValueError异常。
+            
+            Queue.join()
+            生产者使用此方法进行阻塞，直到列队中所有项目均被处理。阻塞将持续到为列队中的每个项目均调用task_done()方法为止；
         
