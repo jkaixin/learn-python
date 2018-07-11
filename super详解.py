@@ -4,6 +4,12 @@
 当我们调用super()时，实际上是实例化了一个 super 类。
 super 包含了两个非常重要的信息: 一个 MRO 以及 MRO 中的一个类。
 可以通过 D.mro() (Python 2 使用 D.__mro__ ) 来查看 D 的 MRO 信息
+
+super 的工作原理如下：
+    def super(cls,inst):
+        mro = inst.__class__.mro()  #返回当前 inst 实例的类的MRO列表
+        return mro[mro.index(cls) + 1]
+        
 """
 
 
