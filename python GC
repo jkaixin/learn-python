@@ -1,0 +1,22 @@
+python 垃圾回收机制
+  才用引用技术为主，标记-清除技术为辅
+  
+引用计算机制
+  
+  在python中一切接对象，他们的核心就是一个结构体：PyObject
+    typedef struct_object {
+      int ob_refcnt;
+      struct_typeobject *ob_type；
+    } PyObject；
+  PyObject 是每个对象必有的内容，其中ob_refcnt 就是作为引用计数；当有新的变量对对象进行引用时，对象的ob_refcnt就会加1，当变量不在引用或者变量
+  删除时，对象的ob_refcnt就是会减1；当引用计数为 0 时，该对象生命就结束了，内存就直接释放；
+  
+  优点：简单 实时性
+  
+  缺点：1、维护引用计数消耗资源；2、不能解决循环引用问题；
+  
+  为了解决循环引用的问题，引入了标记清除
+  
+标记清除
+  
+  容器对象（可以包含对其他对象引用的对象，比如list，set，dict，class，instance）都可能产生循环引用。
